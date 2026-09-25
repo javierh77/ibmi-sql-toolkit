@@ -10,6 +10,10 @@
 -- that interval. Do not share the reset with other monitors
 -- running in the same job.
 --
+-- Note: the first snapshot in a job has no previous interval, so
+-- its CPU value is 0. Values are meaningful from the second
+-- snapshot on.
+--
 -- Services used: QSYS2.SYSTEM_STATUS, QSYS2.SYSTEM_VALUE_INFO
 -- ============================================================
 
@@ -31,7 +35,8 @@ SELECT S.HOST_NAME,
        S.TEMPORARY_ADDRESS_RATE,
        S.TOTAL_JOBS_IN_SYSTEM,
        S.ACTIVE_JOBS_IN_SYSTEM,
-       (SELECT CURRENT_NUMERIC_VALUE
+       -- QPFRADJ is a character system value ('0' to '3')
+       (SELECT INTEGER(TRIM(CURRENT_CHARACTER_VALUE))
           FROM QSYS2.SYSTEM_VALUE_INFO
          WHERE SYSTEM_VALUE_NAME = 'QPFRADJ')
   FROM TABLE (

@@ -9,7 +9,7 @@ They help you monitor system health, detect network issues, and prepare OS upgra
 
 | Folder | Script | What it does |
 | --- | --- | --- |
-| `network` | `01_gateway_events.sql` | Lists TCP/IP gateway events (TCP26xx messages) from the history log |
+| `network` | `01_gateway_events.sql` | Lists gateway events (TCP26xx) from the history log, and connections closed (TCP2617) per remote address |
 | `network` | `02_tcpip_routes.sql` | Shows the active TCP/IP routes and their next hop |
 | `performance` | `01_create_history_table.sql` | Creates a table to keep system status snapshots over time |
 | `performance` | `02_capture_snapshot.sql` | Captures CPU, ASP, address rates, jobs, and QPFRADJ into the history table |
@@ -41,7 +41,7 @@ When you upgrade IBM i or move to the cloud, many problems appear first as small
 - The user running the scripts needs the authority required by each IBM i Service.
 - Column names and available services can vary between releases and PTF levels. If a script fails, check the IBM documentation for that service on your release.
 - These scripts only read system information, except the `performance` scripts, which create and insert into their own history table.
-- Always test on a non-production partition first. If a script does not work on your release, please open an issue with the release and the error message.
+- Tested on IBM i 7.5. Always test on a non-production partition first. If a script does not work on your release, please open an issue with the release and the error message.
 
 ## Contributing
 
